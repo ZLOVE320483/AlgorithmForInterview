@@ -30,4 +30,18 @@ public class PrintUtils {
         builder.append(list.get(size - 1));
         System.out.println(builder);
     }
+
+    public static void printStringList(List<String> list) {
+        if (list == null || list.size() == 0) {
+            return;
+        }
+        StringBuilder builder = new StringBuilder();
+        int size = list.size();
+        for (int i = 0; i < size - 1; i++) {
+            builder.append(list.get(i));
+            builder.append(", ");
+        }
+        builder.append(list.get(size - 1));
+        System.out.println(builder);
+    }
 }
