@@ -25,7 +25,7 @@ public class HasPathSum {
         Deque<TreeNode> nodeDeque = new LinkedList<>();
         Deque<Integer> valDeque = new LinkedList<>();
         nodeDeque.offer(root);
-        valDeque.offer(root.value);
+        valDeque.offer(root.val);
         while (!nodeDeque.isEmpty()) {
             TreeNode curNode = nodeDeque.poll();
             Integer curVal = valDeque.poll();
@@ -35,11 +35,11 @@ public class HasPathSum {
             }
             if (curNode.left != null) {
                 nodeDeque.offer(curNode.left);
-                valDeque.offer(curVal + curNode.left.value);
+                valDeque.offer(curVal + curNode.left.val);
             }
             if (curNode.right != null) {
                 nodeDeque.offer(curNode.right);
-                valDeque.offer(curVal + curNode.right.value);
+                valDeque.offer(curVal + curNode.right.val);
             }
         }
         return false;
@@ -55,10 +55,10 @@ public class HasPathSum {
         if (root == null) {
             return false;
         }
-        if (root.left == null && root.right == null && root.value == targetSum) {
+        if (root.left == null && root.right == null && root.val == targetSum) {
             return true;
         }
-        return hasPathSum2(root.left, targetSum - root.value)
-                || hasPathSum2(root.right, targetSum - root.value);
+        return hasPathSum2(root.left, targetSum - root.val)
+                || hasPathSum2(root.right, targetSum - root.val);
     }
 }
