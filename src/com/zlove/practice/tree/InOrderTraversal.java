@@ -47,7 +47,6 @@ public class InOrderTraversal {
             res.add(node.val);
             node = node.right;
         }
-
         return res;
     }
 
