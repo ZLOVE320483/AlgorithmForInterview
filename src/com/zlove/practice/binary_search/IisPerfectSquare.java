@@ -31,12 +31,12 @@ public class IisPerfectSquare {
         if (num < 2) {
             return true;
         }
-        long left = 2, right = num / 2;
-        long mid;
+        int left = 2, right = num / 2;
+        int mid;
         long guess;
         while (left <= right) {
             mid = left + (right - left) / 2;
-            guess = mid * mid;
+            guess = (long) mid * mid;
             if (guess == num) {
                 System.out.println(mid);
                 return true;
