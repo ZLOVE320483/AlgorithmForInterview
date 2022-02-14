@@ -51,7 +51,45 @@
  */
 class Solution {
     public int minDepth(TreeNode root) {
+        return minDepth2(root);
+    }
 
+    private int minDepth1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        if (left == 0 || right == 0) {
+            return left + right + 1;
+        }
+        return Math.min(left, right) + 1;
+    }
+
+    private int minDepth2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int depth = 1;
+        Deque<TreeNode> deque = new LinkedList();
+        deque.offer(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = deque.poll();
+                if (node.left == null && node.right == null) {
+                    return depth;
+                }
+                if (node.left != null) {
+                    deque.offer(node.left);
+                }
+                if (node.right != null) {
+                    deque.offer(node.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
