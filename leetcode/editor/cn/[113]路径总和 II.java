@@ -1,35 +1,31 @@
 /**
-给你二叉树的根节点 root 和一个表示目标和的整数 targetSum 。判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和 
-targetSum 。如果存在，返回 true ；否则，返回 false 。 
+给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。 
 
  叶子节点 是指没有子节点的节点。 
 
+ 
+ 
  
 
  示例 1： 
 
  
-输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
-输出：true
-解释：等于目标和的根节点到叶节点路径如上图所示。
+输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+输出：[[5,4,11,2],[5,8,4,5]]
  
 
  示例 2： 
 
  
 输入：root = [1,2,3], targetSum = 5
-输出：false
-解释：树中存在两条根节点到叶子节点的路径：
-(1 --> 2): 和为 3
-(1 --> 3): 和为 4
-不存在 sum = 5 的根节点到叶子节点的路径。 
+输出：[]
+ 
 
  示例 3： 
 
  
-输入：root = [], targetSum = 0
-输出：false
-解释：由于树是空的，所以不存在根节点到叶子节点的路径。
+输入：root = [1,2], targetSum = 0
+输出：[]
  
 
  
@@ -37,11 +33,13 @@ targetSum 。如果存在，返回 true ；否则，返回 false 。
  提示： 
 
  
- 树中节点的数目在范围 [0, 5000] 内 
+ 树中节点总数在范围 [0, 5000] 内 
  -1000 <= Node.val <= 1000 
  -1000 <= targetSum <= 1000 
  
- Related Topics 树 深度优先搜索 广度优先搜索 二叉树 👍 782 👎 0
+ 
+ 
+ Related Topics 树 深度优先搜索 回溯 二叉树 👍 668 👎 0
 
 */
 
@@ -62,24 +60,32 @@ targetSum 。如果存在，返回 true ；否则，返回 false 。
  * }
  */
 class Solution {
-    public boolean hasPathSum(TreeNode root, int targetSum) {
-        return hasPathSum2(root, targetSum);
+    List<List<Integer>> ret = new LinkedList();
+    Deque<Integer> path = new LinkedList();
+    Map<TreeNode, TreeNode> map = new HashMap();
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        dfs(root, targetSum);
+        return ret;
     }
 
-    private boolean hasPathSum1(TreeNode root, int targetSum) {
+    private void dfs(TreeNode root, int targetSum) {
         if (root == null) {
-            return false;
+            return;
         }
-        if (root.left == null && root.right == null && root.val == targetSum) {
-            return true;
+        path.offerLast(root.val);
+        targetSum -= root.val;
+        if (root.left == null && root.right == null && targetSum == 0) {
+            ret.add(new LinkedList(path));
         }
-        return hasPathSum(root.left, targetSum - root.val)
-                || hasPathSum(root.right, targetSum - root.val);
+        dfs(root.left, targetSum);
+        dfs(root.right, targetSum);
+        path.pollLast();
     }
 
-    private boolean hasPathSum2(TreeNode root, int targetSum) {
+    private void bfs(TreeNode root, int targetSum) {
         if (root == null) {
-            return false;
+            return;
         }
         Deque<TreeNode> nodeDeque = new LinkedList();
         Deque<Integer> valDeque = new LinkedList();
@@ -93,19 +99,30 @@ class Solution {
                 if (node.left == null
                         && node.right == null
                         && val == targetSum) {
-                    return true;
+                    getPath(node);
                 }
                 if (node.left != null) {
+                    map.put(node.left, node);
                     nodeDeque.offer(node.left);
                     valDeque.offer(val + node.left.val);
                 }
                 if (node.right != null) {
+                    map.put(node.right, node);
                     nodeDeque.offer(node.right);
                     valDeque.offer(val + node.right.val);
                 }
             }
         }
-        return false;
+    }
+
+    private void getPath(TreeNode node) {
+        List<Integer> tmp = new LinkedList();
+        while(node != null) {
+            tmp.add(node.val);
+            node = map.get(node);
+        }
+        Collections.reverse(tmp);
+        ret.add(new LinkedList(tmp));
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
