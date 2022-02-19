@@ -8,45 +8,48 @@ import java.util.*;
 
 public class Main {
 
+    Map<Integer, TreeNode> parent = new HashMap();
+    Set<Integer> visited = new HashSet();
+
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
-        TreeNode node5 = new TreeNode(5);
+        TreeNode root = new TreeNode(3);
+        TreeNode left = new TreeNode(5);
+        TreeNode right = new TreeNode(1);
 
-        root.left = node2;
-        root.right = node3;
-        node2.right = node5;
-        node3.right = node4;
+        root.left = left;
+        root.right = right;
 
-        List<Integer> res = rightSideView(root);
-        PrintUtils.printList(res);
+        Main main = new Main();
+        System.out.println(main.solution1(root, left, right));
     }
 
 
-    public static List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new LinkedList();
-        if (root == null) {
-            return res;
+    private TreeNode solution1(TreeNode root, TreeNode p, TreeNode q) {
+        dfs(root);
+        while (p != null) {
+            visited.add(p.val);
+            p = parent.get(p.val);
         }
-        Deque<TreeNode> stack = new LinkedList();
-        stack.offer(root);
-        while(!stack.isEmpty()) {
-            int size = stack.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = stack.poll();
-                if (i == size - 1) {
-                    res.add(node.val);
-                }
-                if (node.left != null) {
-                    stack.offer(node.left);
-                }
-                if (node.right != null) {
-                    stack.offer(node.right);
-                }
+        while (q != null) {
+            if (visited.contains(q)) {
+                return q;
             }
+            q = parent.get(q.val);
         }
-        return res;
+        return null;
+    }
+
+    private void dfs(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            parent.put(root.left.val, root);
+            dfs(root.left);
+        }
+        if (root.right != null) {
+            parent.put(root.right.val, root);
+            dfs(root.right);
+        }
     }
 }
