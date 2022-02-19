@@ -48,7 +48,7 @@
  */
 class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
-        return solution1(root);
+        return solution2(root);
     }
 
     private List<String> solution1(TreeNode root) {
@@ -75,6 +75,28 @@ class Solution {
 
     private List<String> solution2(TreeNode root) {
         List<String> res = new LinkedList();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> deque = new LinkedList();
+        Deque<String> paths = new LinkedList();
+        deque.offer(root);
+        paths.offer(Integer.toString(root.val));
+        while (!deque.isEmpty()) {
+            TreeNode node = deque.poll();
+            String path = paths.poll();
+            if (node.left == null && node.right == null) {
+                res.add(path);
+            }
+            if (node.left != null) {
+                deque.offer(node.left);
+                paths.offer(new StringBuilder(path).append("->").append(node.left.val).toString());
+            }
+            if (node.right != null) {
+                deque.offer(node.right);
+                paths.offer(new StringBuilder(path).append("->").append(node.right.val).toString());
+            }
+        }
         return res;
     }
 }
