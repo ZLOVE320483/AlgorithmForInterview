@@ -1,6 +1,7 @@
 package com.zlove.practice;
 
 
+import com.zlove.practice.tree.FindBottomLeftValue;
 import com.zlove.practice.tree.TreeNode;
 import com.zlove.practice.utils.PrintUtils;
 
@@ -12,15 +13,15 @@ public class Main {
     Set<Integer> visited = new HashSet();
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(3);
-        TreeNode left = new TreeNode(5);
-        TreeNode right = new TreeNode(1);
-
-        root.left = left;
-        root.right = right;
-
-        Main main = new Main();
-        System.out.println(main.solution1(root, left, right));
+        TreeNode root = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        root.left = node2;
+        root.right = node3;
+        node3.right = node4;
+        FindBottomLeftValue value = new FindBottomLeftValue();
+        System.out.println(value.findBottomLeftValue1(root));
     }
 
 
