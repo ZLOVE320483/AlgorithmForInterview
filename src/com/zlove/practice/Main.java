@@ -13,15 +13,10 @@ public class Main {
     Set<Integer> visited = new HashSet();
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
-        root.left = node2;
-        root.right = node3;
-        node3.right = node4;
-        FindBottomLeftValue value = new FindBottomLeftValue();
-        System.out.println(value.findBottomLeftValue1(root));
+        Set<String> set = new HashSet<>();
+        set.add("1111");
+        set.add("2222");
+        System.out.println(Arrays.toString(set.toArray()));
     }
 
 
