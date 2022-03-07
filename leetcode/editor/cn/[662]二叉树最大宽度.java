@@ -88,7 +88,31 @@
  */
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-
+        if (root == null) {
+            return 0;
+        }
+        int maxWid = 0;
+        LinkedList<TreeNode> queue = new LinkedList();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            int width = queue.getLast().val - queue.getFirst().val + 1;
+            for (int i = 0; i < size; i++) {
+                TreeNode tmp = queue.poll();
+                if (tmp.left != null) {
+                    tmp.left.val = tmp.val * 2 + 1;
+                    queue.offer(tmp.left);
+                }
+                if (tmp.right != null) {
+                    tmp.right.val = tmp.val * 2 + 2;
+                    queue.offer(tmp.right);
+                }
+            }
+            if (width > maxWid) {
+                maxWid = width;
+            }
+        }
+        return maxWid;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
