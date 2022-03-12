@@ -60,7 +60,18 @@
  */
 class Solution {
     public TreeNode pruneTree(TreeNode root) {
+        return containsOne(root) ? root : null;
+    }
 
+    private boolean containsOne(TreeNode node) {
+        if (node == null) {
+            return false;
+        }
+        boolean leftHas = containsOne(node.left);
+        boolean rightHas = containsOne(node.right);
+        if (!leftHas) node.left = null;
+        if (!rightHas) node.right = null;
+        return node.val == 1 || leftHas || rightHas;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
