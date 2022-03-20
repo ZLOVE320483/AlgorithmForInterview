@@ -3,7 +3,6 @@ package com.zlove.practice.tree;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * 输入: root = [3,1,4,null,2], k = 1
