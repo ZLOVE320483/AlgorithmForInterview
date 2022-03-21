@@ -1,51 +1,40 @@
 package com.zlove.practice;
 
-
-import com.zlove.practice.tree.FindBottomLeftValue;
 import com.zlove.practice.tree.TreeNode;
-import com.zlove.practice.utils.PrintUtils;
 
 import java.util.*;
 
 public class Main {
 
-    Map<Integer, TreeNode> parent = new HashMap();
-    Set<Integer> visited = new HashSet();
+    List<List<Integer>> res = new LinkedList();
+    Deque<Integer> path = new LinkedList();
 
     public static void main(String[] args) {
-        Set<String> set = new HashSet<>();
-        set.add("1111");
-        set.add("2222");
-        System.out.println(Arrays.toString(set.toArray()));
+        int[] candidates = {2, 3, 6, 7};
+        Main main = new Main();
+        main.combinationSum(candidates, 7);
     }
 
 
-    private TreeNode solution1(TreeNode root, TreeNode p, TreeNode q) {
-        dfs(root);
-        while (p != null) {
-            visited.add(p.val);
-            p = parent.get(p.val);
-        }
-        while (q != null) {
-            if (visited.contains(q)) {
-                return q;
-            }
-            q = parent.get(q.val);
-        }
-        return null;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        backTracking(candidates, target, 0, 0);
+        return res;
     }
 
-    private void dfs(TreeNode root) {
-        if (root == null) {
+    private void backTracking(int[] candidates, int target, int sum, int startIndex) {
+        if (sum > target) {
             return;
         }
-        if (root.left != null) {
-            parent.put(root.left.val, root);
-            dfs(root.left);
+        if (sum == target) {
+            res.add(new LinkedList(path));
+            return;
         }
-        if (root.right != null) {
-            parent.put(root.right.val, root);
-            dfs(root.right);
+        for (int i = startIndex; i < candidates.length; i++) {
+            sum += candidates[i];
+            path.addLast(candidates[i]);
+            backTracking(candidates, target, sum, i);
+            sum -= candidates[i];
+            path.removeLast();
         }
     }
 }
