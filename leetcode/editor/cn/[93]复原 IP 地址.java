@@ -76,12 +76,14 @@ class Solution {
     }
 
     private boolean isValid(String s, int start, int end) {
-        if (start > end)
+        if (start > end) {
             return false;
-        if (s.charAt(start) == '0' && start != end)
+        }
+        if (s.charAt(start) == '0' && start != end) {
             return false;
+        }
         int num = 0;
-        for (int i = start; i <=  end; i++) {
+        for (int i = start; i <= end; i++) {
             if (s.charAt(i) < '0' || s.charAt(i) > '9') {
                 return false;
             }
