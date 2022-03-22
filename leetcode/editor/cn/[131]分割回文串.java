@@ -33,7 +33,7 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    List<List<String>> result = new ArrayList();
+    List<List<String>> result = new LinkedList();
     Deque<String> path = new LinkedList();
 
     public List<List<String>> partition(String s) {
@@ -43,13 +43,12 @@ class Solution {
 
     private void backTracking(String s, int startIndex) {
         if (startIndex >= s.length()) {
-            result.add(new ArrayList(path));
+            result.add(new LinkedList(path));
             return;
         }
         for (int i = startIndex; i < s.length(); i++) {
             if (isPalindrome(s, startIndex, i)) {
-                String str = s.substring(startIndex, i + 1);
-                path.addLast(str);
+                path.addLast(s.substring(startIndex, i + 1));
             } else {
                 continue;
             }

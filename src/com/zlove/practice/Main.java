@@ -1,7 +1,5 @@
 package com.zlove.practice;
 
-import com.zlove.practice.tree.TreeNode;
-
 import java.util.*;
 
 public class Main {
@@ -10,9 +8,8 @@ public class Main {
     Deque<Integer> path = new LinkedList();
 
     public static void main(String[] args) {
-        int[] candidates = {2, 3, 6, 7};
-        Main main = new Main();
-        main.combinationSum(candidates, 7);
+        String sss = "abcdef";
+        System.out.println(sss.substring(0, 2));
     }
 
 
