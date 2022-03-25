@@ -41,9 +41,7 @@
 class Solution {
     List<List<Integer>> result = new LinkedList();
     Deque<Integer> path = new LinkedList();
-    boolean[] used;
     public List<List<Integer>> permute(int[] nums) {
-        used = new boolean[nums.length];
         backTracking(nums);
         return result;
     }
@@ -54,13 +52,11 @@ class Solution {
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (used[i]) {
+            if (path.contains(nums[i])) {
                 continue;
             }
             path.addLast(nums[i]);
-            used[i] = true;
             backTracking(nums);
-            used[i] = false;
             path.removeLast();
         }
     }
