@@ -8,8 +8,9 @@ public class Main {
     Deque<Integer> path = new LinkedList();
 
     public static void main(String[] args) {
-        String sss = "abcdef";
-        System.out.println(sss.substring(0, 2));
+        String a = "a" + "b";
+        String b = "ab";
+        System.out.println(a == b);
     }
 
 
