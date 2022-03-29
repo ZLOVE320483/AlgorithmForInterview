@@ -35,7 +35,20 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int longestOnes(int[] nums, int k) {
-
+        int sum = 0, left = 0, res = 0;
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[right] != 1) {
+                sum += 1;
+            }
+            while (sum > k) {
+                if (nums[left] != 1) {
+                    sum -= 1;
+                }
+                left++;
+            }
+            res = Math.max(res, right - left + 1);
+        }
+        return res;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
