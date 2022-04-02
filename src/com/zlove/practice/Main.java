@@ -1,5 +1,7 @@
 package com.zlove.practice;
 
+import com.zlove.practice.utils.PrintUtils;
+
 import java.util.*;
 
 public class Main {
@@ -8,8 +10,32 @@ public class Main {
     Deque<Integer> path = new LinkedList();
 
     public static void main(String[] args) {
-        int[] nums = {2,3,1,2,4,3};
-        System.out.println(minSubArrayLen(7, nums));
+        int[] nums = {2,0,2,1,1,0};
+        sortColors(nums);
+        PrintUtils.printList(nums);
+    }
+
+    public static void sortColors(int[] nums) {
+        if (nums.length <= 1) {
+            return;
+        }
+        int left = 0, right = nums.length - 1;
+        int tmp;
+        for (int i = 0; i < right;) {
+            if (nums[i] == 0) {
+                tmp = nums[left];
+                nums[left] = nums[i];
+                left++;
+                nums[i] = tmp;
+            } else if (nums[i] == 2) {
+                tmp = nums[right];
+                nums[right] = nums[i];
+                right--;
+                nums[i] = tmp;
+            } else {
+                i++;
+            }
+        }
     }
 
     public static int minSubArrayLen(int target, int[] nums) {
