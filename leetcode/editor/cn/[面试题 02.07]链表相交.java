@@ -84,6 +84,10 @@ skipB = 3
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        return solution2(headA, headB);
+    }
+
+    private ListNode solution1(ListNode headA, ListNode headB) {
         if (headA == null || headB == null) {
             return null;
         }
@@ -94,6 +98,45 @@ public class Solution {
             p2 = p2 != null ? p2.next : headA;
         }
         return p1;
+    }
+
+    private ListNode solution2(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        int lenA = 0, lenB = 0;
+        ListNode curA = headA, curB = headB;
+        while (curA != null) {
+            curA = curA.next;
+            lenA++;
+        }
+        while (curB != null) {
+            curB = curB.next;
+            lenB++;
+        }
+        if (lenB > lenA) {
+            int tmpLen = lenA;
+            lenA = lenB;
+            lenB = tmpLen;
+            curA = headB;
+            curB = headA;
+        } else {
+            curA = headA;
+            curB = headB;
+        }
+        int gap = lenA - lenB;
+        while (gap > 0) {
+            curA = curA.next;
+            gap--;
+        }
+        while (curA != null) {
+            if (curA == curB) {
+                return curA;
+            }
+            curA = curA.next;
+            curB = curB.next;
+        }
+        return null;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
