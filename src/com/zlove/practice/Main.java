@@ -1,79 +1,48 @@
 package com.zlove.practice;
 
-import com.zlove.practice.utils.PrintUtils;
-
-import java.util.*;
-
 public class Main {
 
-    List<List<Integer>> res = new LinkedList();
-    Deque<Integer> path = new LinkedList();
-
     public static void main(String[] args) {
-        int[] nums = {2,0,2,1,1,0};
-        sortColors(nums);
-        PrintUtils.printList(nums);
+        Main main = new Main();
+        String res = main.reverseWords("the sky is blue");
+        System.out.println(res);
     }
 
-    public static void sortColors(int[] nums) {
-        if (nums.length <= 1) {
-            return;
-        }
-        int left = 0, right = nums.length - 1;
-        int tmp;
-        for (int i = 0; i < right;) {
-            if (nums[i] == 0) {
-                tmp = nums[left];
-                nums[left] = nums[i];
-                left++;
-                nums[i] = tmp;
-            } else if (nums[i] == 2) {
-                tmp = nums[right];
-                nums[right] = nums[i];
-                right--;
-                nums[i] = tmp;
+    public String reverseWords(String s) {
+        s = s.trim();
+        String[] splits = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < splits.length - 1; i++) {
+            if (!splits[i].isEmpty()) {
+                sb.append(splits[i]);
+                sb.append(" ");
             } else {
-                i++;
+                if (sb.charAt(sb.length() - 1) != ' ') {
+                    sb.append(" ");
+                }
             }
         }
+        sb.append(splits[splits.length - 1]);
+        String source = sb.toString();
+        String[] resSplits = source.split(" ");
+        reverse(resSplits);
+        StringBuilder resSb = new StringBuilder();
+        for (int i = 0; i < resSplits.length - 1; i++) {
+            resSb.append(resSplits[i]);
+            resSb.append(" ");
+        }
+        resSb.append(resSplits[resSplits.length - 1]);
+        return resSb.toString();
     }
 
-    public static int minSubArrayLen(int target, int[] nums) {
-        int result = Integer.MAX_VALUE;
-        int left = 0, sum = 0;
-        for (int right = 0; right < nums.length; right++) {
-            sum += nums[right];
-            if (sum == target) {
-                result = Math.min(result, right - left + 1);
-            }
-            while (sum > target) {
-                sum -= nums[left];
-                left++;
-            }
-        }
-        return result;
-    }
-
-
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        backTracking(candidates, target, 0, 0);
-        return res;
-    }
-
-    private void backTracking(int[] candidates, int target, int sum, int startIndex) {
-        if (sum > target) {
-            return;
-        }
-        if (sum == target) {
-            res.add(new LinkedList(path));
-            return;
-        }
-        for (int i = startIndex; i < candidates.length; i++) {
-            sum += candidates[i];
-            path.addLast(candidates[i]);
-            backTracking(candidates, target, sum, i);
-            sum -= candidates[i];
-            path.removeLast();
+    private void reverse(String[] source) {
+        int start = 0, end = source.length - 1;
+        while (start < end) {
+            String tmp = source[start];
+            source[start] = source[end];
+            source[end] = tmp;
+            start++;
+            end--;
         }
     }
 }
