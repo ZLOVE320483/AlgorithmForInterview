@@ -3,9 +3,8 @@ package com.zlove.practice;
 public class Main {
 
     public static void main(String[] args) {
-        Main main = new Main();
-        String res = main.reverseWords("the sky is blue");
-        System.out.println(res);
+        String aa = "abcdef";
+        System.out.println(aa.substring(0, 2));
     }
 
     public String reverseWords(String s) {
