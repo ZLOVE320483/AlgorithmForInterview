@@ -4,6 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         String aa = "abcdef";
+        aa.contains("ac");
         System.out.println(aa.substring(0, 2));
     }
 
