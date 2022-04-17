@@ -1,11 +1,38 @@
 package com.zlove.practice;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class Main {
 
     public static void main(String[] args) {
-        String aa = "abcdef";
-        aa.contains("ac");
-        System.out.println(aa.substring(0, 2));
+        String test = "/../";
+        Main main = new Main();
+        System.out.println(main.simplifyPath(test));
+    }
+
+    public String simplifyPath(String path) {
+        String[] names = path.split("/");
+        Deque<String> deque = new LinkedList();
+        for (int i = 0; i < names.length; i++) {
+            if ("..".equals(names[i])) {
+                if (!deque.isEmpty()) {
+                    deque.pollLast();
+                }
+            } else if (names[i].length() > 0 && !".".equals(names[i])) {
+                deque.offerLast(names[i]);
+            }
+        }
+        StringBuilder builder = new StringBuilder();
+        if (deque.isEmpty()) {
+            builder.append("/");
+        } else {
+            while (!deque.isEmpty()) {
+                builder.append("/");
+                builder.append(deque.poll());
+            }
+        }
+        return builder.toString();
     }
 
     public String reverseWords(String s) {
