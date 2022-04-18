@@ -6,9 +6,32 @@ import java.util.LinkedList;
 public class Main {
 
     public static void main(String[] args) {
-        String test = "/../";
+        String test = "abbaca";
         Main main = new Main();
-        System.out.println(main.simplifyPath(test));
+        System.out.println(main.removeDuplicates(test));
+    }
+
+    public String removeDuplicates(String s) {
+        Deque<Character> stack = new LinkedList();
+        char[] cs = s.toCharArray();
+        stack.push(cs[0]);
+        for (int i = 1; i < cs.length; i++) {
+            if (!stack.isEmpty()) {
+                char top = stack.peek();
+                if (cs[i] == top) {
+                    stack.pop();
+                } else {
+                    stack.push(cs[i]);
+                }
+            } else {
+                stack.push(cs[i]);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
     }
 
     public String simplifyPath(String path) {
