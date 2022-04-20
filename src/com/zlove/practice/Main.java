@@ -11,25 +11,6 @@ public class Main {
         System.out.println(main.removeDuplicates(test));
     }
 
-    public int evalRPN(String[] tokens) {
-        Deque<Integer> stack = new LinkedList();
-        for (int i = 0; i < tokens.length; i++) {
-            String cur = tokens[i];
-            switch (cur) {
-                case "+" :
-                    break;
-                case "-":
-                    break;
-                case "*":
-                    break;
-                case "/":
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     public String removeDuplicates(String s) {
         Deque<Character> stack = new LinkedList();
         char[] cs = s.toCharArray();
