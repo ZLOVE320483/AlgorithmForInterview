@@ -6,10 +6,8 @@ import java.util.LinkedList;
 public class Main {
 
     public static void main(String[] args) {
-        String test = "abbaca";
-        Main main = new Main();
-        System.out.println(main.removeDuplicates(test));
     }
+
 
     public String removeDuplicates(String s) {
         Deque<Character> stack = new LinkedList();
