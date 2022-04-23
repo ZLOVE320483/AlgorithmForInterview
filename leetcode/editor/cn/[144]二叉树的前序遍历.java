@@ -91,14 +91,16 @@ class Solution {
             return;
         }
         Deque<TreeNode> stack = new LinkedList();
-        while (root != null || !stack.isEmpty()) {
-            while (root != null) {
-                stack.push(root);
-                res.add(root.val);
-                root = root.left;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            res.add(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
             }
-            root = stack.pop();
-            root = root.right;
+            if (node.left != null) {
+                stack.push(node.left);
+            }
         }
     }
 }
