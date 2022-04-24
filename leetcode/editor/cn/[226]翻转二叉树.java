@@ -59,6 +59,10 @@
 class Solution {
 
     public TreeNode invertTree(TreeNode root) {
+        return solution3(root);
+    }
+
+    private TreeNode solution1(TreeNode root) {
         if (root == null) {
             return null;
         }
@@ -68,5 +72,47 @@ class Solution {
         root.right = left;
         return root;
     }
+
+    private TreeNode solution2(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        swap(root);
+        solution2(root.left);
+        solution2(root.right);
+        return root;
+    }
+
+    private TreeNode solution3(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        Deque<TreeNode> deque = new LinkedList();
+        deque.offer(root);
+        while (!deque.isEmpty()) {
+            int size = deque.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = deque.poll();
+                swap(node);
+                if (node.left != null) {
+                    deque.offer(node.left);
+                }
+                if (node.right != null) {
+                    deque.offer(node.right);
+                }
+            }
+        }
+        return root;
+    }
+
+    private void swap(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        TreeNode tmp = node.left;
+        node.left = node.right;
+        node.right = tmp;
+    }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
