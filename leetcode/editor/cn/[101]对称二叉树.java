@@ -54,32 +54,37 @@ class Solution {
         if (root == null) {
             return true;
         }
-        return isSymmetric2(root.left, root.right);
+        return solution2(root.left, root.right);
     }
 
-    private boolean isSymmetric(TreeNode p, TreeNode q) {
+    private boolean solution1(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
         }
         if (p == null || q == null || p.val != q.val) {
             return false;
         }
-        return isSymmetric(p.left, q.right) && isSymmetric(p.right, q.left);
+        return solution1(p.left, q.right) && solution1(p.right, q.left);
     }
 
-    private boolean isSymmetric2(TreeNode p, TreeNode q) {
-        Queue<TreeNode> queue = new LinkedList();
-        queue.offer(p);
-        queue.offer(q);
-        while (!queue.isEmpty()) {
-            TreeNode node1 = queue.poll();
-            TreeNode node2 = queue.poll();
-            if (node1 == null && node2 == null) continue;
-            if (node1 == null || node2 == null || node1.val != node2.val) return false;
-            queue.offer(node1.left);
-            queue.offer(node2.right);
-            queue.offer(node1.right);
-            queue.offer(node2.left);
+    private boolean solution2(TreeNode p, TreeNode q) {
+        Deque<TreeNode> deque = new LinkedList();
+        deque.offer(p);
+        deque.offer(q);
+        while (!deque.isEmpty()) {
+            TreeNode node1 = deque.poll();
+            TreeNode node2 = deque.poll();
+
+            if (node1 == null && node2 == null) {
+                continue;
+            }
+            if (node1 == null || node2 == null || node1.val != node2.val) {
+                return false;
+            }
+            deque.offer(node1.left);
+            deque.offer(node2.right);
+            deque.offer(node1.right);
+            deque.offer(node2.left);
         }
         return true;
     }
