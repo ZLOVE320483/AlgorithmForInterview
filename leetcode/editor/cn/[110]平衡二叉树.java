@@ -63,7 +63,11 @@ class Solution {
         if (root == null) {
             return true;
         }
-        return treeHeight(root) != -1;
+        int leftDep = maxDepth(root.left);
+        int rightDep = maxDepth(root.right);
+        return Math.abs(leftDep - rightDep) <= 1
+                && isBalanced(root.left)
+                && isBalanced(root.right);
     }
 
     private int maxDepth(TreeNode root) {
