@@ -1,13 +1,42 @@
 package com.zlove.practice;
 
+import com.zlove.practice.tree.TreeNode;
+
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
     }
 
+    private List<String> solution2(TreeNode root) {
+        List<String> res = new LinkedList();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> nodes = new LinkedList();
+        Deque<String> paths = new LinkedList();
+        nodes.offer(root);
+        paths.offer(String.valueOf(root.val));
+        while (!nodes.isEmpty()) {
+            TreeNode node = nodes.poll();
+            String path = paths.poll();
+            if (node.left == null && node.right == null) {
+                res.add(path);
+            }
+            if (node.left != null) {
+                nodes.offer(node.left);
+                paths.offer(path + "->" + node.left.val);
+            }
+            if (node.right != null) {
+                nodes.offer(node.right);
+                paths.offer(path + "->" + node.right.val);
+            }
+        }
+        return res;
+    }
 
     public String removeDuplicates(String s) {
         Deque<Character> stack = new LinkedList();

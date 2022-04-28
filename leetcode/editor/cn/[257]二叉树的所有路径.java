@@ -78,23 +78,23 @@ class Solution {
         if (root == null) {
             return res;
         }
-        Deque<TreeNode> deque = new LinkedList();
+        Deque<TreeNode> nodes = new LinkedList();
         Deque<String> paths = new LinkedList();
-        deque.offer(root);
-        paths.offer(Integer.toString(root.val));
-        while (!deque.isEmpty()) {
-            TreeNode node = deque.poll();
+        nodes.offer(root);
+        paths.offer(String.valueOf(root.val));
+        while (!nodes.isEmpty()) {
+            TreeNode node = nodes.poll();
             String path = paths.poll();
             if (node.left == null && node.right == null) {
                 res.add(path);
             }
             if (node.left != null) {
-                deque.offer(node.left);
-                paths.offer(new StringBuilder(path).append("->").append(node.left.val).toString());
+                nodes.offer(node.left);
+                paths.offer(path + "->" + node.left.val);
             }
             if (node.right != null) {
-                deque.offer(node.right);
-                paths.offer(new StringBuilder(path).append("->").append(node.right.val).toString());
+                nodes.offer(node.right);
+                paths.offer(path + "->" + node.right.val);
             }
         }
         return res;
