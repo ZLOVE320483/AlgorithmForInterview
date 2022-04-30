@@ -52,6 +52,10 @@
  */
 class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
+        return solution2(root);
+    }
+
+    private int solution1(TreeNode root) {
         if (root == null) {
             return 0;
         }
@@ -59,6 +63,29 @@ class Solution {
             return root.left.val + sumOfLeftLeaves(root.right);
         }
         return sumOfLeftLeaves(root.left) + sumOfLeftLeaves(root.right);
+    }
+
+    private int solution2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int res = 0;
+        Deque<TreeNode> deque = new LinkedList();
+        deque.offer(root);
+        while (!deque.isEmpty()) {
+            TreeNode node = deque.poll();
+            if (node.left != null) {
+                if (isLeaf(node.left)) {
+                    res += node.left.val;
+                } else {
+                    deque.offer(node.left);
+                }
+            }
+            if (node.right != null) {
+                deque.offer(node.right);
+            }
+        }
+        return res;
     }
 
     private boolean isLeaf(TreeNode node) {
