@@ -9,6 +9,52 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        Main main = new Main();
+        System.out.println(main.calculate("3*2+2"));
+    }
+
+    public int calculate(String s) {
+        char[] chArr = s.toCharArray();
+        int num = 0;
+        char sign = '+';
+        Deque<Integer> stack = new LinkedList();
+        for (int i = 0; i < chArr.length; i++) {
+            char c = chArr[i];
+            if (isDigit(c)) {
+                num = 10 * num + (c - '0');
+            }
+            if ((!isDigit(c) && c != ' ') || i == chArr.length - 1) {
+                switch (sign) {
+                    case '+':
+                        stack.push(num);
+                        break;
+                    case '-':
+                        stack.push(-num);
+                        break;
+                    case '*':
+                        int pre1 = stack.pop();
+                        stack.push(pre1 * num);
+                        break;
+                    case '/':
+                        int pre2 = stack.pop();
+                        stack.push(pre2 / num);
+                        break;
+                    default:
+                        break;
+                }
+                sign = c;
+                num = 0;
+            }
+        }
+        int result = 0;
+        while (!stack.isEmpty()) {
+            result += stack.pop();
+        }
+        return result;
+    }
+
+    private boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
     }
 
     private List<String> solution2(TreeNode root) {
