@@ -60,13 +60,13 @@
  * }
  */
 class Solution {
-    List<List<Integer>> ret = new LinkedList();
+
+    List<List<Integer>> res = new LinkedList();
     Deque<Integer> path = new LinkedList();
-    Map<TreeNode, TreeNode> map = new HashMap();
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         dfs(root, targetSum);
-        return ret;
+        return res;
     }
 
     private void dfs(TreeNode root, int targetSum) {
@@ -76,53 +76,12 @@ class Solution {
         path.offerLast(root.val);
         targetSum -= root.val;
         if (root.left == null && root.right == null && targetSum == 0) {
-            ret.add(new LinkedList(path));
+            res.add(new LinkedList(path));
         }
         dfs(root.left, targetSum);
         dfs(root.right, targetSum);
         path.pollLast();
     }
 
-    private void bfs(TreeNode root, int targetSum) {
-        if (root == null) {
-            return;
-        }
-        Deque<TreeNode> nodeDeque = new LinkedList();
-        Deque<Integer> valDeque = new LinkedList();
-        nodeDeque.offer(root);
-        valDeque.offer(root.val);
-        while (!nodeDeque.isEmpty()) {
-            int size = nodeDeque.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = nodeDeque.poll();
-                Integer val = valDeque.poll();
-                if (node.left == null
-                        && node.right == null
-                        && val == targetSum) {
-                    getPath(node);
-                }
-                if (node.left != null) {
-                    map.put(node.left, node);
-                    nodeDeque.offer(node.left);
-                    valDeque.offer(val + node.left.val);
-                }
-                if (node.right != null) {
-                    map.put(node.right, node);
-                    nodeDeque.offer(node.right);
-                    valDeque.offer(val + node.right.val);
-                }
-            }
-        }
-    }
-
-    private void getPath(TreeNode node) {
-        List<Integer> tmp = new LinkedList();
-        while(node != null) {
-            tmp.add(node.val);
-            node = map.get(node);
-        }
-        Collections.reverse(tmp);
-        ret.add(new LinkedList(tmp));
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
