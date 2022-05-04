@@ -63,9 +63,10 @@ class Solution {
 
     List<List<Integer>> res = new LinkedList();
     Deque<Integer> path = new LinkedList();
+    Map<TreeNode, TreeNode> map = new HashMap();
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        dfs(root, targetSum);
+        bfs(root, targetSum);
         return res;
     }
 
@@ -81,6 +82,45 @@ class Solution {
         dfs(root.left, targetSum);
         dfs(root.right, targetSum);
         path.pollLast();
+    }
+
+    private void bfs(TreeNode root, int targetSum) {
+        if (root == null) {
+            return;
+        }
+        Deque<TreeNode> nodes = new LinkedList();
+        Deque<Integer> vals = new LinkedList();
+        nodes.offer(root);
+        vals.offer(root.val);
+        while (!nodes.isEmpty()) {
+            TreeNode node = nodes.poll();
+            int val = vals.poll();
+            if (node.left == null
+                    && node.right == null
+                    && val == targetSum) {
+                getPath(node);
+            }
+            if (node.left != null) {
+                map.put(node.left, node);
+                nodes.offer(node.left);
+                vals.offer(val + node.left.val);
+            }
+            if (node.right != null) {
+                map.put(node.right, node);
+                nodes.offer(node.right);
+                vals.offer(val + node.right.val);
+            }
+        }
+    }
+
+    private void getPath(TreeNode node) {
+        List<Integer> tmp = new LinkedList();
+        while (node != null) {
+            tmp.add(node.val);
+            node = map.get(node);
+        }
+        Collections.reverse(tmp);
+        res.add(tmp);
     }
 
 }
