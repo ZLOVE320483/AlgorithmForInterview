@@ -55,28 +55,29 @@ class Solution {
     private int postIndex;
     private int[] inOrder;
     private int[] postOrder;
-    private Map<Integer, Integer> indexInOrder = new HashMap();
+    private Map<Integer, Integer> inorderIndexMap = new HashMap();
+
     public TreeNode buildTree(int[] inorder, int[] postorder) {
-        this.inOrder = inorder;
-        this.postOrder = postorder;
-        this.postIndex = postorder.length - 1;
+        inOrder = inorder;
+        postOrder = postorder;
+        postIndex = inorder.length - 1;
         for (int i = 0; i < inorder.length; i++) {
-            indexInOrder.put(inorder[i], i);
+            inorderIndexMap.put(inorder[i], i);
         }
         return helper(0, inorder.length - 1);
     }
 
-    private TreeNode helper(int leftInOrder, int rightInOrder) {
-        if (leftInOrder > rightInOrder) {
+    private TreeNode helper(int inOrderLeft, int inOrderRight) {
+        if (inOrderLeft > inOrderRight) {
             return null;
         }
-        int rootValue = postOrder[postIndex];
-        int rootInOrderIndex = indexInOrder.get(rootValue);
+        int postInOrderIndex = inorderIndexMap.get(postOrder[postIndex]);
+        TreeNode root = new TreeNode(postOrder[postIndex]);
         postIndex--;
-        TreeNode root = new TreeNode(rootValue);
-        root.right = helper(rootInOrderIndex + 1, rightInOrder);
-        root.left = helper(leftInOrder, rootInOrderIndex - 1);
+        root.right = helper(postInOrderIndex + 1, inOrderRight);
+        root.left = helper(inOrderLeft, postInOrderIndex - 1);
         return root;
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
