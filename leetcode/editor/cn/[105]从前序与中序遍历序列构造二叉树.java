@@ -52,29 +52,34 @@
  * }
  */
 class Solution {
+
+    private int[] preOrder;
+    private int[] inOrder;
     private Map<Integer, Integer> inOrderIndexMap = new HashMap();
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int n = inorder.length;
-        for (int i = 0; i < n; i++) {
+        this.preOrder = preorder;
+        this.inOrder = inorder;
+        int length = inorder.length;
+        for (int i = 0; i < length; i++) {
             inOrderIndexMap.put(inorder[i], i);
         }
-        return buildTreeHelper(preorder, inorder, 0, n - 1, 0, n - 1);
+        return helper(0, length - 1, 0, length - 1);
     }
 
-    private TreeNode buildTreeHelper(int[] preorder, int[] inorder, int preOrderLeft, int preOrderRight, int inOrderLeft, int inOrderRight) {
-        if (preOrderLeft > preOrderRight) {
+    private TreeNode helper(int preLeft, int preRight, int inLeft, int inRight) {
+        if (preLeft > preRight) {
             return null;
         }
-        int preOrderRoot = preorder[preOrderLeft];
-        int inOrderRootIndex = inOrderIndexMap.get(preOrderRoot);
-        int subLeftTreeNodeSize = inOrderRootIndex - inOrderLeft;
-        TreeNode root = new TreeNode(preOrderRoot);
-        root.left = buildTreeHelper(preorder, inorder, preOrderLeft + 1, preOrderLeft + subLeftTreeNodeSize,
-                inOrderLeft, inOrderRootIndex - 1);
-        root.right = buildTreeHelper(preorder, inorder, preOrderLeft + subLeftTreeNodeSize + 1,
-                preOrderRight, inOrderRootIndex + 1, inOrderRight);
+        int rootVal = preOrder[preLeft];
+        TreeNode root = new TreeNode(rootVal);
+        int rootInOrdexIndex = inOrderIndexMap.get(rootVal);
+        int size = rootInOrdexIndex - inLeft;
+        root.left = helper(preLeft + 1, preLeft + size, inLeft, rootInOrdexIndex - 1);
+        root.right = helper(preLeft + size + 1, preRight, rootInOrdexIndex + 1, inRight);
         return root;
     }
+
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
