@@ -65,29 +65,31 @@
  * }
  */
 class Solution {
+
     public TreeNode constructMaximumBinaryTree(int[] nums) {
-        return construct(nums, 0, nums.length);
+        return made(nums, 0, nums.length);
     }
 
-    private TreeNode construct(int[] nums, int start, int end) {
-        if (start == end) {
+    private TreeNode made(int[] nums, int left, int right) {
+        if (right == left) {
             return null;
         }
-        int max = maxI(nums, start, end);
-        TreeNode root = new TreeNode(nums[max]);
-        root.left = construct(nums, start, max);
-        root.right = construct(nums, max + 1, end);
+        int maxIndex = maxIndex(nums, left, right);
+        TreeNode root = new TreeNode(nums[maxIndex]);
+        root.left = made(nums, left, maxIndex);
+        root.right = made(nums, maxIndex + 1, right);
         return root;
     }
 
-    private int maxI(int[] nums, int start, int right) {
-        int maxIndex = start;
-        for (int i = start; i < right; i++) {
-            if (nums[maxIndex] < nums[i]) {
-                maxIndex = i;
+    private int maxIndex(int[] nums, int start, int end) {
+        int index = start;
+        for (int i = start; i < end; i++) {
+            if (nums[i] > nums[index]) {
+                index = i;
             }
         }
-        return maxIndex;
+        return index;
     }
+
 }
 //leetcode submit region end(Prohibit modification and deletion)
