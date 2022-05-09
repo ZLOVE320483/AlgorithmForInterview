@@ -54,19 +54,60 @@
  */
 class Solution {
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        return solution2(root1, root2);
+    }
+
+    private TreeNode solution1(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null) {
             return null;
-        }
-        if (root1 == null) {
-            return root2;
         }
         if (root2 == null) {
             return root1;
         }
+        if (root1 == null) {
+            return root2;
+        }
         TreeNode root = new TreeNode(root1.val + root2.val);
-        root.left = mergeTrees(root1.left, root2.left);
-        root.right = mergeTrees(root1.right,root2.right);
+        root.left = solution1(root1.left, root2.left);
+        root.right = solution1(root1.right, root2.right);
         return root;
+    }
+
+    private  TreeNode solution2(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return null;
+        }
+        if (root2 == null) {
+            return root1;
+        }
+        if (root1 == null) {
+            return root2;
+        }
+        Deque<TreeNode> deque = new LinkedList();
+        deque.offer(root1);
+        deque.offer(root2);
+        while (!deque.isEmpty()) {
+            TreeNode node1 = deque.poll();
+            TreeNode node2 = deque.poll();
+            node1.val = node1.val + node2.val;
+            if (node1.left != null && node2.left != null) {
+                deque.offer(node1.left);
+                deque.offer(node2.left);
+            }
+            if (node1.right != null && node2.right != null) {
+                deque.offer(node1.right);
+                deque.offer(node2.right);
+            }
+            // 若node1的左节点为空，直接赋值
+            if (node1.left == null && node2.left != null) {
+                node1.left = node2.left;
+            }
+            // 若node2的左节点为空，直接赋值
+            if (node1.right == null && node2.right != null) {
+                node1.right = node2.right;
+            }
+        }
+        return root1;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
