@@ -53,6 +53,10 @@
  */
 class Solution {
     public TreeNode searchBST(TreeNode root, int val) {
+        return solution2(root, val);
+    }
+
+    private TreeNode solution1(TreeNode root, int val) {
         if (root == null) {
             return null;
         }
@@ -60,6 +64,19 @@ class Solution {
             return root;
         }
         return searchBST(root.val > val ? root.left : root.right, val);
+    }
+
+    private TreeNode solution2(TreeNode root, int val) {
+        while (root != null) {
+            if (root.val > val) {
+                root = root.left;
+            } else if (root.val < val) {
+                root = root.right;
+            } else {
+                return root;
+            }
+        }
+        return root;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
