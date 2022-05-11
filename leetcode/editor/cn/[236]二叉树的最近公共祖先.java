@@ -55,13 +55,11 @@
  * }
  */
 class Solution {
+
     Map<Integer, TreeNode> parent = new HashMap();
     Set<Integer> visited = new HashSet();
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return solution2(root, p, q);
-    }
 
-    private TreeNode solution1(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         dfs(root);
         while (p != null) {
             visited.add(p.val);
@@ -90,13 +88,5 @@ class Solution {
         }
     }
 
-    private TreeNode solution2(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || p == root || q == root) return root;
-        TreeNode left = solution2(root.left, p, q);
-        TreeNode right = solution2(root.right, p, q);
-        if (left == null) return right;
-        if (right == null) return left;
-        return root;
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
