@@ -60,13 +60,15 @@
  * }
  */
 class Solution {
-    private List<Integer> answer = new LinkedList();
-    private int count, maxCount, base;
+
+    private int base, maxCount, count;
+    private List<Integer> ans = new LinkedList();
+
     public int[] findMode(TreeNode root) {
         dfs(root);
-        int[] res = new int[answer.size()];
-        for (int i = 0; i < answer.size(); i++) {
-            res[i] = answer.get(i);
+        int[] res = new int[ans.size()];
+        for (int i = 0; i < ans.size(); i++) {
+            res[i] = ans.get(i);
         }
         return res;
     }
@@ -87,13 +89,13 @@ class Solution {
             base = x;
             count = 1;
         }
-        if (count == maxCount) {
-            answer.add(x);
+        if (maxCount == count) {
+            ans.add(x);
         }
         if (count > maxCount) {
             maxCount = count;
-            answer.clear();
-            answer.add(x);
+            ans.clear();
+            ans.add(x);
         }
     }
 }
