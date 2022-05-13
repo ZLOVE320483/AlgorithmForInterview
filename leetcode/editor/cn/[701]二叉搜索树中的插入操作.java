@@ -62,15 +62,41 @@
  */
 class Solution {
     public TreeNode insertIntoBST(TreeNode root, int val) {
+        return solution2(root, val);
+    }
+
+    private TreeNode solution1(TreeNode root, int val) {
         if (root == null) {
             return new TreeNode(val);
         }
         if (val < root.val) {
-            root.left = insertIntoBST(root.left, val);
-        } else {
-            root.right = insertIntoBST(root.right, val);
+            root.left = solution1(root.left, val);
+        } else if (val > root.val) {
+            root.right = solution1(root.right, val);
         }
         return root;
+    }
+
+    private TreeNode solution2(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+        TreeNode newRoot = root;
+        TreeNode pre = root;
+        while (root != null) {
+            pre = root;
+            if (val < root.val) {
+                root = root.left;
+            } else if (val > root.val) {
+                root = root.right;
+            }
+        }
+        if (val < pre.val) {
+            pre.left = new TreeNode(val);
+        } else if (val > pre.val) {
+            pre.right = new TreeNode(val);
+        }
+        return newRoot;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
