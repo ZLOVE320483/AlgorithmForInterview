@@ -10,7 +10,51 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.calculate("3*2+2"));
+        System.out.println(main.decodeString("3[a]2[bc]"));
+    }
+
+    public String decodeString(String s) {
+        char[] chArr = s.toCharArray();
+        Deque<Character> stack = new LinkedList();
+        for (int i = 0; i < chArr.length; i++) {
+            char curCh = chArr[i];
+            if (curCh != ']') {
+                stack.push(curCh);
+            } else {
+                StringBuilder builder = new StringBuilder();
+                char top = stack.pop();
+                while (top != '[') {
+                    builder.append(top);
+                    top = stack.pop();
+                }
+                StringBuilder countBuilder = new StringBuilder();
+                while (!stack.isEmpty()) {
+                    char count = stack.pop();
+                    if (isDigit(count)) {
+                        countBuilder.append(count);
+                    } else {
+                        stack.push(count);
+                        break;
+                    }
+                }
+
+                int repeatCount = Integer.valueOf(countBuilder.reverse().toString());
+                StringBuilder chunk = new StringBuilder();
+                String block = builder.reverse().toString();
+                for (int j = 0; j < repeatCount; j++) {
+                    chunk.append(block);
+                }
+                String chunkStr = chunk.toString();
+                for (int k = 0; k < chunkStr.length(); k++) {
+                    stack.push(chunkStr.charAt(k));
+                }
+            }
+        }
+        StringBuilder res = new StringBuilder();
+        while (!stack.isEmpty()) {
+            res.append(stack.pop());
+        }
+        return res.reverse().toString();
     }
 
     public int calculate(String s) {
