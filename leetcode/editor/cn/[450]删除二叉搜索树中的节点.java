@@ -79,38 +79,26 @@ class Solution {
         if (root == null) {
             return null;
         }
-        if (key > root.val) {
+        if (root.val < key) {
             root.right = deleteNode(root.right, key);
-        } else if (key < root.val) {
+        } else if (root.val > key) {
             root.left = deleteNode(root.left, key);
         } else {
-            if (root.left == null && root.right == null) {
-                return null;
-            } else if (root.right != null) {
-                root.val = getRightMin(root);
-                root.right = deleteNode(root.right, root.val);
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
             } else {
-                root.val = getLeftMax(root);
-                root.left = deleteNode(root.left, root.val);
+                TreeNode tmp = root.right;
+                while (tmp.left != null) {
+                    tmp = tmp.left;
+                }
+                tmp.left = root.left;
+                root = root.right;
             }
         }
         return root;
     }
 
-    private int getRightMin(TreeNode root) {
-        root = root.right;
-        while (root.left != null) {
-            root = root.left;
-        }
-        return root.val;
-    }
-
-    private int getLeftMax(TreeNode root) {
-        root = root.left;
-        while (root.right != null) {
-            root = root.right;
-        }
-        return root.val;
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
