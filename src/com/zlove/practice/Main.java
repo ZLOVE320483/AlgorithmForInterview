@@ -2,6 +2,7 @@ package com.zlove.practice;
 
 import com.zlove.practice.tree.TreeNode;
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,26 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.decodeString("3[a]2[bc]"));
+        int[] g = {10, 9, 8, 7};
+        int[] s= {5, 6, 7, 8};
+        System.out.println(main.findContentChildren(g, s));
+    }
+
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int countOfChildren = g.length;
+        int countOfCookies = s.length;
+        int count = 0;
+        for (int i = 0, j = 0; i < countOfChildren && j < countOfCookies; i++, j++) {
+            while (j < countOfCookies && g[i] > s[j]) {
+                j++;
+            }
+            if (j < countOfCookies) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public String decodeString(String s) {
