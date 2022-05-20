@@ -11,9 +11,22 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[] g = {10, 9, 8, 7};
-        int[] s= {5, 6, 7, 8};
-        System.out.println(main.findContentChildren(g, s));
+        int[] g = {3, 2, 1, 0, 4};
+        System.out.println(main.canJump(g));
+    }
+
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        int rightMost = 0;
+        for (int i = 0; i < n; i++) {
+            if (i <= rightMost) {
+                rightMost = Math.max(rightMost, i + nums[i]);
+                if (rightMost >= n) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public int findContentChildren(int[] g, int[] s) {
