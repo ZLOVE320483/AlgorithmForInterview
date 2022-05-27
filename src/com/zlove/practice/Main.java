@@ -2,10 +2,7 @@ package com.zlove.practice;
 
 import com.zlove.practice.tree.TreeNode;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
@@ -13,6 +10,21 @@ public class Main {
         Main main = new Main();
         int[] g = {3, 2, 1, 0, 4};
         System.out.println(main.canJump(g));
+    }
+
+    public static int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, (p1, p2) -> {
+            if (p2[0] != p1[0]) {
+                return p2[0] - p1[0];
+            } else {
+                return p1[1] - p2[1];
+            }
+        });
+        List<int[]> res = new LinkedList<>();
+        for (int[] p : people) {
+            res.add(p[1], p);
+        }
+        return res.toArray(new int[people.length][]);
     }
 
     public boolean canJump(int[] nums) {
