@@ -1,6 +1,7 @@
 package com.zlove.practice;
 
 import com.zlove.practice.tree.TreeNode;
+import com.zlove.practice.utils.PrintUtils;
 
 import java.util.*;
 
@@ -8,8 +9,32 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[] g = {3, 2, 1, 0, 4};
-        System.out.println(main.canJump(g));
+        int[][] points = new int[][] {
+                {3,9},{7,12},{3,8},{6,8},{9,10},{2,9},{0,9},{3,9},{0,6},{2,8}
+        };
+        System.out.println(main.findMinArrowShots(points));
+    }
+
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, ((o1, o2) -> {
+            if (o1[0] == o2[0]) {
+                return o1[1] - o2[1];
+            } else {
+                return o1[0] - o2[0];
+            }
+        }));
+        for (int[] p : points) {
+            PrintUtils.printList(p);
+        }
+        int count = 1;
+        int start = points[0][1];
+        for (int i = 1; i < points.length; i++) {
+            if (points[i][0] > start) {
+                count++;
+                start = points[i][1];
+            }
+        }
+        return count;
     }
 
     public static int[][] reconstructQueue(int[][] people) {
