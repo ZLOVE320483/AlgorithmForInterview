@@ -9,10 +9,25 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[][] points = new int[][] {
-                {3,9},{7,12},{3,8},{6,8},{9,10},{2,9},{0,9},{3,9},{0,6},{2,8}
-        };
-        System.out.println(main.findMinArrowShots(points));
+        int[] nums = {-1, 3, 2, 0};
+        System.out.println(main.find132pattern(nums));
+    }
+
+    public boolean find132pattern(int[] nums) {
+        int length = nums.length;
+        if (length < 3) {
+            return false;
+        }
+        for (int i = 0; i < length - 2; i++) {
+            for (int j = i + 1; j < length - 1; j++) {
+                for (int k = j + 1; k < length; k++) {
+                    if (nums[j] > nums[k] && nums[k] > nums[i]) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public int findMinArrowShots(int[][] points) {
