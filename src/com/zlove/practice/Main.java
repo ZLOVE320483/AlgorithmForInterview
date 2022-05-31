@@ -9,8 +9,41 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[] nums = {-1, 3, 2, 0};
-        System.out.println(main.find132pattern(nums));
+        int[][] intervals = {
+                {1, 4},
+                {1, 4}
+        };
+        int[][] res = main.merge(intervals);
+        for (int[] ii : res) {
+            PrintUtils.printList(ii);
+        }
+
+    }
+
+    public int[][] merge(int[][] intervals) {
+        if (intervals.length < 2) {
+            return intervals;
+        }
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+        List<int[]> list = new LinkedList();
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] > right) {
+                int[] tmp = new int[2];
+                tmp[0] = left;
+                tmp[1] = intervals[i - 1][1];
+                list.add(tmp);
+                left = intervals[i][0];
+            }
+            right = intervals[i][1];
+        }
+        list.add(new int[] {left, intervals[intervals.length - 1][1]});
+        int[][] res = new int[list.size()][];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
     }
 
     public boolean find132pattern(int[] nums) {
