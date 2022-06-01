@@ -9,15 +9,30 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        int[][] intervals = {
-                {1, 4},
-                {1, 4}
-        };
-        int[][] res = main.merge(intervals);
-        for (int[] ii : res) {
-            PrintUtils.printList(ii);
-        }
+        System.out.println(main.monotoneIncreasingDigits(100));
 
+    }
+
+    public int monotoneIncreasingDigits(int n) {
+        LinkedList<Integer> list = new LinkedList();
+        while (n > 0) {
+            int p = n % 10;
+            list.offerFirst(p);
+            n /= 10;
+        }
+        for (int i = list.size() - 1; i > 0; i--) {
+            int before = list.get(i - 1);
+            int after = list.get(i);
+            if (after < before) {
+                list.set(i, 9);
+                list.set(i - 1, before-1);
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < list.size(); i++) {
+            res = res * 10 + list.get(i);
+        }
+        return res;
     }
 
     public int[][] merge(int[][] intervals) {
