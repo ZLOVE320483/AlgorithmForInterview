@@ -47,14 +47,12 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int minCostClimbingStairs(int[] cost) {
-        int dp0 = cost[0];
-        int dp1 = cost[1];
-        for (int i = 2; i < cost.length; i++) {
-            int dpi = Math.min(dp0, dp1) + cost[i];
-            dp0 = dp1;
-            dp1 = dpi;
+        int n = cost.length;
+        int[] dp = new int[n + 1];
+        for (int i = 2; i <= n; i++) {
+            dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
         }
-        return Math.min(dp0, dp1);
+        return dp[n];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
